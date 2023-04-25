@@ -5,28 +5,23 @@ const getAll = () => {
   return db("cars");
 };
 
-const getById = () => {
+const getById = (id) => {
   // HOKUS POKUS
-  return db("cars").where("id", id).first(); //array'in ilk elemanı olan id alınır
+  return db("cars").where("id", id).first(); //!array'in ilk elemanı olan id alınır
+};
+const getByVin = (vin) => {
+  return db("cars").where("vin", vin).first();
 };
 
-const getByVin = (vin) =>{
-  return db('cars').where({vin}).first();
-}
-
-const create = () => {
+const create = async (cars) => {
   // HOKUS POKUS
-  const insertedCar = db("cars")
-    .insert(car)
-    .then((id) => {
-      return getById(id[0]); //id'yi yakalayıp kaydı dön
-    });
-  return insertedCar;
+  const [id] = await db("cars").insert(cars);
+  return await getById(id);
 };
 
 module.exports = {
   getAll,
   getById,
   create,
-  getByVin
+  getByVin,
 };
